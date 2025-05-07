@@ -1,0 +1,12 @@
+{
+	"name": "Active Day Points",
+	"description": "Points will be given to users on each active day",
+	"uri": "",
+	"version": "1.O",
+	"date": "2025-05-03",
+	"author": "Shaik Masthan",
+	"author_uri": "https://github.com/csemasthan/",
+	"license": "GPLv2",
+	"min_q2a": "1.7.5",
+	"load_order": "after_db_init"
+}
