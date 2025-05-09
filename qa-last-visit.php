@@ -23,16 +23,15 @@ class qa_html_theme_layer extends qa_html_theme_base
 				{	
 					qa_db_usermetas_set($userid, 'lastactivedate', $today);
 					$Availed_days = (int)(qa_db_usermetas_get($userid, 'activedays') ?? 0);
-
-					if((($Availed_days+1)*$points_per_activeday) <= $points_per_activeday_max)
-						qa_db_usermetas_set($userid, 'activedays', $Availed_days+1);
-						qa_db_query_sub('UPDATE ^userpoints SET activedays = #, points = points + # WHERE userid = #',$Availed_days+1,($points_per_activeday * $points_multiple	), $userid);
+					qa_db_usermetas_set($userid, 'activedays', $Availed_days+1);		
+					qa_db_query_sub('UPDATE ^userpoints SET activedays = # WHERE userid = #',$Availed_days+1, $userid);
+					qa_db_points_update_ifuser($userid, $recalc=true);
 					
 					qa_report_event('activeday_event', $userid,null,null,null);
 					
 					setcookie($cookie_name, $today, time() + 86400, '/');
 
-					error_log("Updated lastactivedate for user". $userid ." in theme");
+					//error_log("Updated lastactivedate for user". $userid ." in theme");
 				}
 			}
         }
