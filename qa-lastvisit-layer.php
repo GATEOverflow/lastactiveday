@@ -12,7 +12,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         parent::initialize(); // Always call the parent
 		require_once QA_INCLUDE_DIR . 'db/points.php';
 		
-		error_log(Activeday_Constants::ACTIVEDAY_Event_name);
+		//error_log(Activeday_Constants::ACTIVEDAY_Event_name);
         if (qa_get_logged_in_userid()) {
             $userid = qa_get_logged_in_userid();
             $today = date('Y-m-d');
