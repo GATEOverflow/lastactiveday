@@ -6,3 +6,11 @@
 
 **Tamper-Resilient Design:** Although the cookie can be manually altered by the user, such tampering merely triggers a fallback database check. This ensures data integrity while maintaining low server load in normal usage.
 
+**Profile Chart Integration:**
+Earned points from daily activity are automatically reflected in the user’s profile chart, giving a visual representation of active participation and engagement trends.
+
+**Automatic Recalculation:**
+Any change in the point-per-day or maximum ceiling settings triggers automatic recalculation of points, ensuring the point totals stay consistent with updated configurations.
+
+
+
