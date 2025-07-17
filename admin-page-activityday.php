@@ -86,7 +86,10 @@ class admin_page_activityday
 			
 			//Update the active day history in the pupi_pc_history table for syncying with the profile chart
 			$max_days_to_be_availed=floor(((int) qa_opt(Activeday_Constants::OPT_POINTS_PER_DAY_MAX)) / max((int) qa_opt(Activeday_Constants::OPT_POINTS_PER_DAY), 1));
-			$this->update_activeday_point_flags_pc($max_days_to_be_availed);
+			
+			if (qa_db_table_exists(qa_db_add_table_prefix('pupi_pc_history'))) {
+				$this->update_activeday_point_flags_pc($max_days_to_be_availed);
+			}
 			
 			
 			$ok = qa_lang('activeday/savemsg');
