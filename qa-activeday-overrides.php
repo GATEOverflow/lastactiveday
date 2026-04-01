@@ -13,10 +13,15 @@ function qa_db_points_calculations(){
 	$per_day = (int) qa_opt(Activeday_Constants::OPT_POINTS_PER_DAY);
 	$max= floor((int) qa_opt(Activeday_Constants::OPT_POINTS_PER_DAY_MAX) / max($per_day, 1));
 
-	$orig [Activeday_Constants::COLUMN_ACTIVEDAYS] =  array(
-	'multiple' => $options['points_multiple'] * $per_day,
-	'formula' => "COALESCE((SELECT LEAST(CAST(userid_src.content AS SIGNED),". $max.") AS ".Activeday_Constants::COLUMN_ACTIVEDAYS." FROM ^usermetas AS userid_src WHERE userid_src.title='".Activeday_Constants::COLUMN_ACTIVEDAYS."' AND userid_src.userid~), 0)",
-	);	
+	$orig[Activeday_Constants::COLUMN_ACTIVEDAYS] = array(
+    'multiple' => $options['points_multiple'] * $per_day,
+    'formula' => "COALESCE(
+        LEAST(CAST(userid_src.content AS SIGNED), ".$max."),
+    0) AS ".Activeday_Constants::COLUMN_ACTIVEDAYS."
+    FROM ^usermetas AS userid_src
+    WHERE userid~
+    AND userid_src.title='".Activeday_Constants::COLUMN_ACTIVEDAYS."'",
+);
 	return $orig;
 }
 ?>
