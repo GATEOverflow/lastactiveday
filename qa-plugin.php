@@ -39,6 +39,32 @@ function qa_db_usermetas_clear($userid, $title) {
     );
 }
 
+/**
+ * Atomically try to claim today's active day for a user.
+ * Returns true only for the first request that sets today's date.
+ */
+function qa_db_activeday_try_claim_today($userid, $title, $today) {
+    qa_db_query_sub(
+        'INSERT IGNORE INTO ^usermetas (userid, title, content) VALUES (#, $, $)',
+        $userid, $title, ''
+    );
+    qa_db_query_sub(
+        'UPDATE ^usermetas SET content = $ WHERE userid = # AND title = $ AND content != $',
+        $today, $userid, $title, $today
+    );
+    return qa_db_connection()->affected_rows > 0;
+}
+
+/**
+ * Atomically increment a usermeta counter by 1.
+ */
+function qa_db_usermetas_increment($userid, $title) {
+    qa_db_query_sub(
+        'INSERT INTO ^usermetas (userid, title, content) VALUES (#, $, $) ON DUPLICATE KEY UPDATE content = CAST(content AS SIGNED) + 1',
+        $userid, $title, '1'
+    );
+}
+
 //These db functions used for updating the history tables according to the updated maximum points - used for syncing the profile charts
 
 function pupi_pc_get_users_with_activeday_event() {
